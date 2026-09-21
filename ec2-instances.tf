@@ -23,6 +23,7 @@ resource "aws_instance" "target" {
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.private[0].id
   key_name               = aws_key_pair.security_lab.key_name
+  iam_instance_profile   = aws_iam_instance_profile.ssm_instance_profile.name
   vpc_security_group_ids = [aws_security_group.private_internal.id]
 
   metadata_options {
