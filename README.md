@@ -27,7 +27,8 @@ This project is being built incrementally with a full commit history documenting
 - **Compliance:** AWS Config (S3 public access, SSH exposure, encryption, IAM password policy, CloudTrail status)
 - **Encryption:** Customer-managed KMS key with automatic yearly rotation, applied across all S3 buckets
 - **Compute:** EC2 (private subnet, encrypted, IMDSv2 enforced)
-- **Planned:** Security Hub, Lambda automated response
+- **Automated response:** Lambda function triggered by EventBridge on GuardDuty findings, publishes alerts via SNS
+- **Planned:** Security Hub
 
 ## Architecture
 
@@ -46,6 +47,7 @@ _(Diagram to be added as infrastructure is built out)_
 - [x] VPC interface endpoints for SSM provisioned (IAM role, security groups, endpoints all verified correct via CLI)
 - [x] AWS Config enabled with 5 compliance rules (S3 public access, SSH exposure, EBS encryption, IAM password policy, CloudTrail status)
 - [x] Customer-managed KMS key with automatic rotation; all S3 buckets migrated from AES256 to KMS encryption
+- [x] Automated incident response: GuardDuty findings routed via EventBridge to Lambda, which publishes formatted alerts to SNS
 - [ ] **Known issue:** SSM Session Manager registration not completing despite correct IAM role, endpoint, and security group configuration — under investigation (see Known Issues below)
 - [ ] Attack simulation (Atomic Red Team / manual, mapped to MITRE ATT&CK)
 - [ ] Automated response (Lambda + SNS)
