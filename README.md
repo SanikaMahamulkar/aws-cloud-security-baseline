@@ -18,7 +18,10 @@ This project is being built incrementally with a full commit history documenting
 - **IaC:** Terraform, AWS provider
 - **State management:** S3 (versioned, encrypted) + DynamoDB (locking)
 - **Cloud:** AWS (eu-west-2 / London)
-- **Planned:** GuardDuty, Security Hub, Config, CloudTrail, VPC, KMS, Lambda automated response
+- **Networking:** VPC, public/private subnets across 2 AZs
+- **Logging:** Multi-region CloudTrail with log file validation
+- **Detection:** GuardDuty (S3 protection, malware protection)
+- **Planned:** Security Hub, AWS Config, KMS, Lambda automated response
 
 ## Architecture
 
@@ -28,10 +31,12 @@ _(Diagram to be added as infrastructure is built out)_
 
 - [x] AWS account hardened: root MFA enabled, dedicated least-privilege-bound IAM admin user
 - [x] Terraform initialized with remote state backend (S3 + DynamoDB state locking)
-- [ ] VPC and network segmentation
+- [x] VPC with public/private subnets across 2 Availability Zones
+- [x] Multi-region CloudTrail with encrypted, validated logging
+- [x] GuardDuty threat detection enabled
+- [ ] Security groups and network hardening
 - [ ] IAM least-privilege policies (replacing initial AdministratorAccess)
-- [ ] Logging: CloudTrail, AWS Config
-- [ ] Detection: GuardDuty, Security Hub
+- [ ] AWS Config for compliance monitoring
 - [ ] Attack simulation (Atomic Red Team / manual, mapped to MITRE ATT&CK)
 - [ ] Automated response (Lambda + SNS)
 - [ ] Full security report and threat model
