@@ -11,6 +11,7 @@ This project is being built incrementally with a full commit history documenting
 - Infrastructure as Code (Terraform) with remote state management
 - AWS account security fundamentals (MFA, least-privilege IAM)
 - Cloud security architecture: networking, logging, encryption, threat detection
+- Continuous compliance monitoring (AWS Config) mapped to ISO 27001-relevant controls
 - Systematic troubleshooting and diagnosis of cloud networking/access issues
 - Simulated attack scenarios mapped to MITRE ATT&CK, with measured detection coverage
 
@@ -22,8 +23,9 @@ This project is being built incrementally with a full commit history documenting
 - **Networking:** VPC, public/private subnets across 2 AZs
 - **Logging:** Multi-region CloudTrail with log file validation
 - **Detection:** GuardDuty (S3 protection, malware protection)
+- **Compliance:** AWS Config (S3 public access, SSH exposure, encryption, IAM password policy, CloudTrail status)
 - **Compute:** EC2 (private subnet, encrypted, IMDSv2 enforced)
-- **Planned:** Security Hub, AWS Config, KMS, Lambda automated response
+- **Planned:** Security Hub, KMS, Lambda automated response
 
 ## Architecture
 
@@ -40,8 +42,8 @@ _(Diagram to be added as infrastructure is built out)_
 - [x] Least-privilege IAM policy drafted from Access Advisor evidence (pending attachment)
 - [x] EC2 target instance deployed (private subnet, encrypted, IMDSv2)
 - [x] VPC interface endpoints for SSM provisioned (IAM role, security groups, endpoints all verified correct via CLI)
+- [x] AWS Config enabled with 5 compliance rules (S3 public access, SSH exposure, EBS encryption, IAM password policy, CloudTrail status)
 - [ ] **Known issue:** SSM Session Manager registration not completing despite correct IAM role, endpoint, and security group configuration — under investigation (see Known Issues below)
-- [ ] AWS Config for compliance monitoring
 - [ ] Attack simulation (Atomic Red Team / manual, mapped to MITRE ATT&CK)
 - [ ] Automated response (Lambda + SNS)
 - [ ] Full security report and threat model
