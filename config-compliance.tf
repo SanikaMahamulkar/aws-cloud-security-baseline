@@ -169,3 +169,13 @@ resource "aws_config_config_rule" "cloudtrail_enabled" {
 
   depends_on = [aws_config_configuration_recorder.main]
 }
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "config_logs" {
+  bucket = aws_s3_bucket.config_logs.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm     = "aws:kms"
+      kms_master_key_id = aws_kms_key.main.arn
+    }
+  }
+}
