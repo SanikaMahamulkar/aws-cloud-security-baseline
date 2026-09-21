@@ -11,6 +11,7 @@ This project is being built incrementally with a full commit history documenting
 - Infrastructure as Code (Terraform) with remote state management
 - AWS account security fundamentals (MFA, least-privilege IAM)
 - Cloud security architecture: networking, logging, encryption, threat detection
+- Systematic troubleshooting and diagnosis of cloud networking/access issues
 - Simulated attack scenarios mapped to MITRE ATT&CK, with measured detection coverage
 
 ## Tech stack
@@ -21,6 +22,7 @@ This project is being built incrementally with a full commit history documenting
 - **Networking:** VPC, public/private subnets across 2 AZs
 - **Logging:** Multi-region CloudTrail with log file validation
 - **Detection:** GuardDuty (S3 protection, malware protection)
+- **Compute:** EC2 (private subnet, encrypted, IMDSv2 enforced)
 - **Planned:** Security Hub, AWS Config, KMS, Lambda automated response
 
 ## Architecture
@@ -29,17 +31,24 @@ _(Diagram to be added as infrastructure is built out)_
 
 ## Progress log
 
-- [x] AWS account hardened: root MFA enabled, dedicated least-privilege-bound IAM admin user
+- [x] AWS account hardened: root MFA enabled, dedicated IAM admin user
 - [x] Terraform initialized with remote state backend (S3 + DynamoDB state locking)
 - [x] VPC with public/private subnets across 2 Availability Zones
 - [x] Multi-region CloudTrail with encrypted, validated logging
 - [x] GuardDuty threat detection enabled
-- [ ] Security groups and network hardening
-- [ ] IAM least-privilege policies (replacing initial AdministratorAccess)
+- [x] Security groups: public web, private internal, IP-restricted SSH
+- [x] Least-privilege IAM policy drafted from Access Advisor evidence (pending attachment)
+- [x] EC2 target instance deployed (private subnet, encrypted, IMDSv2)
+- [x] VPC interface endpoints for SSM provisioned (IAM role, security groups, endpoints all verified correct via CLI)
+- [ ] **Known issue:** SSM Session Manager registration not completing despite correct IAM role, endpoint, and security group configuration — under investigation (see Known Issues below)
 - [ ] AWS Config for compliance monitoring
 - [ ] Attack simulation (Atomic Red Team / manual, mapped to MITRE ATT&CK)
 - [ ] Automated response (Lambda + SNS)
 - [ ] Full security report and threat model
+
+## Known Issues
+
+**SSM Session Manager registration failure (investigating):** the EC2 target instance has a correctly-configured IAM instance profile (`AmazonSSMManagedInstanceCore`), all three required VPC interface endpoints (`ssm`, `ssmmessages`, `ec2messages`) are `available`, and security group rules correctly allow HTTPS between the instance and the endpoints — all verified via AWS CLI. Despite this, and despite multiple full instance rebuilds and explicit `systemctl enable/start amazon-ssm-agent` via user_data, the instance is not appearing in `aws ssm describe-instance-information`. Console output capture has also been empty across multiple checks. Next steps: verify DNS resolution to the private endpoint from within the instance, check for a possible NACL or route table issue, and confirm the AMI's baked-in agent version is compatible with the endpoint region.
 
 ## Author
 
