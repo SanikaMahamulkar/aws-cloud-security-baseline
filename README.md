@@ -47,7 +47,8 @@ _(Diagram to be added as infrastructure is built out)_
 - [x] VPC interface endpoints for SSM provisioned (IAM role, security groups, endpoints all verified correct via CLI)
 - [x] AWS Config enabled with 5 compliance rules (S3 public access, SSH exposure, EBS encryption, IAM password policy, CloudTrail status)
 - [x] Customer-managed KMS key with automatic rotation; all S3 buckets migrated from AES256 to KMS encryption
-- [x] Automated incident response: GuardDuty findings routed via EventBridge to Lambda, which publishes formatted alerts to SNS
+- [x] Automated incident response: GuardDuty findings routed via EventBridge to Lambda, which publishes formatted alerts to SNS — pipeline validated via direct Lambda invocation (SNS alert confirmed delivered)
+- [x] GuardDuty populated with 385 sample findings across multiple attack categories for detection coverage analysis
 - [ ] **Known issue:** SSM Session Manager registration not completing despite correct IAM role, endpoint, and security group configuration — under investigation (see Known Issues below)
 - [ ] Attack simulation (Atomic Red Team / manual, mapped to MITRE ATT&CK)
 - [ ] Automated response (Lambda + SNS)
