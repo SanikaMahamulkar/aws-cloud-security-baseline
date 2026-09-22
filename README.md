@@ -55,9 +55,9 @@ _(Diagram to be added as infrastructure is built out)_
 - [ ] Automated response (Lambda + SNS)
 - [ ] Full security report and threat model
 
-## Known Issues
+## Known Issues (Resolved)
 
-**SSM Session Manager registration failure (investigating):** the EC2 target instance has a correctly-configured IAM instance profile (`AmazonSSMManagedInstanceCore`), all three required VPC interface endpoints (`ssm`, `ssmmessages`, `ec2messages`) are `available`, and security group rules correctly allow HTTPS between the instance and the endpoints — all verified via AWS CLI. Despite multiple full instance rebuilds and explicit `systemctl enable/start amazon-ssm-agent` via user_data, the instance is not appearing in `aws ssm describe-instance-information`. Next steps: verify DNS resolution to the private endpoint from within the instance, check for a possible NACL or route table issue.
+**SSM Session Manager registration failure — RESOLVED.** Root cause: the Amazon Linux 2023 AMI used for the target instance does not ship with the `amazon-ssm-agent` service pre-installed. The original `user_data` script only attempted to `systemctl enable/start amazon-ssm-agent`, which silently failed (`Unit file amazon-ssm-agent.service does not exist`) — visible only via `aws ec2 get-console-output`, which had not been checked closely enough in earlier debugging passes. All previously-verified infrastructure (IAM instance profile, VPC endpoints, security groups, DNS settings) was genuinely correct throughout; the fault was entirely at the OS/agent level, not the network/IAM level. Fixed by adding an explicit `dnf install` of the official `amazon-ssm-agent.rpm` to `user_data` before enabling the service. Confirmed resolved: the instance now registers as `Online` in `aws ssm describe-instance-information`, and a real remote command (`aws ssm send-command`) was executed successfully with genuine output returned. This is a useful reminder that a fully-correct network/IAM configuration can still mask a simple missing-dependency issue at the OS layer — the eventual fix required reading console boot logs directly rather than continuing to re-verify networking that was already confirmed correct.
 
 ## Author
 
