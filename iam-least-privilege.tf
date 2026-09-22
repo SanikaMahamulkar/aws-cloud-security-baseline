@@ -8,6 +8,13 @@ data "aws_iam_policy_document" "terraform_scoped" {
       "dynamodb:*",
       "cloudtrail:*",
       "guardduty:*",
+      "config:*",
+      "kms:*",
+      "lambda:*",
+      "sns:*",
+      "events:*",
+      "logs:*",
+      "ssm:*",
     ]
     resources = ["*"]
   }
@@ -37,6 +44,16 @@ data "aws_iam_policy_document" "terraform_scoped" {
       "iam:TagRole",
       "iam:TagPolicy",
       "iam:CreateServiceLinkedRole",
+      "iam:PutRolePolicy",
+      "iam:DeleteRolePolicy",
+      "iam:GetRolePolicy",
+      "iam:ListRolePolicies",
+      "iam:ListInstanceProfilesForRole",
+      "iam:CreateInstanceProfile",
+      "iam:DeleteInstanceProfile",
+      "iam:AddRoleToInstanceProfile",
+      "iam:RemoveRoleFromInstanceProfile",
+      "iam:GetInstanceProfile",
     ]
     resources = ["*"]
   }
