@@ -42,7 +42,7 @@ _(Diagram to be added as infrastructure is built out)_
 - [x] Multi-region CloudTrail with encrypted, validated logging
 - [x] GuardDuty threat detection enabled
 - [x] Security groups: public web, private internal, IP-restricted SSH
-- [x] Least-privilege IAM policy drafted from Access Advisor evidence (pending attachment)
+- [x] Least-privilege IAM policy attached and validated — AdministratorAccess fully removed from sanika-admin; confirmed via terraform plan running clean across all 40+ resources with zero excess permissions
 - [x] EC2 target instance deployed (private subnet, encrypted, IMDSv2)
 - [x] VPC interface endpoints for SSM provisioned (IAM role, security groups, endpoints all verified correct via CLI)
 - [x] AWS Config enabled with 5 compliance rules (S3 public access, SSH exposure, EBS encryption, IAM password policy, CloudTrail status)
