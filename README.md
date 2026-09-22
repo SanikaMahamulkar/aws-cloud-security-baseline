@@ -50,7 +50,7 @@ _(Diagram to be added as infrastructure is built out)_
 - [x] Automated incident response: GuardDuty findings routed via EventBridge to Lambda, which publishes formatted alerts to SNS — pipeline validated via direct Lambda invocation (SNS alert confirmed delivered)
 - [x] GuardDuty populated with 400 sample findings across multiple attack categories for detection coverage analysis
 - [x] Detection coverage mapped to MITRE ATT&CK tactics — see `detection-coverage-report.md` (8 tactics, 212 distinct finding types, severity distribution)
-- [ ] **Known issue:** SSM Session Manager registration not completing despite correct IAM role, endpoint, and security group configuration — under investigation (see Known Issues below)
+- [x] SSM Session Manager fully resolved — root cause identified (AMI did not ship amazon-ssm-agent pre-installed); fixed via user_data agent install; confirmed working via remote command execution (see Known Issues below for full root-cause writeup)
 - [ ] Attack simulation (Atomic Red Team / manual, mapped to MITRE ATT&CK)
 - [ ] Automated response (Lambda + SNS)
 - [ ] Full security report and threat model
