@@ -27,6 +27,7 @@ data "aws_iam_policy_document" "terraform_scoped" {
       "iam:GetRole",
       "iam:GetPolicy",
       "iam:GetPolicyVersion",
+      "iam:ListPolicyVersions",
       "iam:ListPolicies",
       "iam:ListAttachedUserPolicies",
       "iam:ListAttachedRolePolicies",
@@ -65,6 +66,27 @@ data "aws_iam_policy_document" "terraform_scoped" {
       "sts:GetCallerIdentity",
       "organizations:DescribeOrganization",
       "access-analyzer:*",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "IAMAccessReviewReadOnly"
+    effect = "Allow"
+    actions = [
+      "iam:ListUsers",
+      "iam:ListRoles",
+      "iam:GetAccessKeyLastUsed",
+      "iam:ListAccessKeys",
+      "iam:ListMFADevices",
+      "iam:ListGroupsForUser",
+      "iam:ListUserPolicies",
+      "iam:GetUserPolicy",
+      "iam:GetRolePolicy",
+      "iam:GenerateServiceLastAccessedDetails",
+      "iam:GetServiceLastAccessedDetails",
+      "iam:GetAccountAuthorizationDetails",
+      "iam:GetLoginProfile",
     ]
     resources = ["*"]
   }
